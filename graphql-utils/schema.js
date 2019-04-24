@@ -7,6 +7,7 @@ const typeDefs = buildSchema(`
     profilePicture: String
     bio: String
     role: String
+    company: String
     socialMedia: SocialMedia
   }
   type SocialMedia {
