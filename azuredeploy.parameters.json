@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "appName": {
-            "value": "cspace11"
+            "value": "cspace12"
         },
         "dbName":{
             "value": "cspace"
@@ -18,7 +18,7 @@
             "value": "westeurope"
         },
         "storageAccountName": {
-            "value": "cspaceclient11"
+            "value": "cspaceclient12"
         },
         "accountType": {
             "value": "Standard_RAGRS"
@@ -33,7 +33,7 @@
             "value": true
         },
         "databaseAccount": {
-            "value": "cspace11"
+            "value": "cspace12"
         },
         "locationName": {
             "value": "West Europe"
