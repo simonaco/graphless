@@ -52,7 +52,7 @@
       },
       "repoURL": {
         "type": "string",
-        "defaultValue": "https://github.com/simonaco/nodebinar.git"
+        "defaultValue": "https://github.com/simonaco/cspace-backend"
       },
       "branch": {
         "type": "string",
