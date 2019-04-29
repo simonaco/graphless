@@ -8,18 +8,6 @@
           "description": "The name of the function app that you wish to create."
         }
       },
-      "dbName": {
-        "type": "string",
-        "metadata": {
-          "description": "The USERNAME field from Settings -> Connection String in CosmosDB"
-        }
-      },
-      "dbPassword": {
-        "type": "string",
-        "metadata": {
-          "description": "The PRIMARY PASSWORD field from Settings -> Connection String in CosmosDB"
-        }
-      },
       "dbPort": {
         "type": "string",
         "metadata": {
@@ -58,29 +46,29 @@
         "type": "string",
         "defaultValue": "master"
       },
-      "storageAccountName": {
-          "type": "String"
-      },
       "accountType": {
-          "type": "String"
+          "type": "string",
+          "defaultValue": "Standard_RAGRS"
       },
       "kind": {
-          "type": "String"
+          "type": "string",
+          "defaultValue": "StorageV2"
       },
       "accessTier": {
-          "type": "String"
+          "type": "string",
+          "defaultValue": "Hot"
       },
       "supportsHttpsTrafficOnly": {
-          "type": "Bool"
-        },
-        "databaseAccount": {
-          "type": "string"
+          "type": "bool",
+          "defaultValue": true
         },
         "locationName": {
-            "type": "String"
+            "type": "string",
+            "defaultValue": "West Europe"
         },
         "defaultExperience": {
-            "type": "String"
+            "type": "string",
+            "defaultValue": "Azure Cosmos DB for MongoDB API"
         }
     },
     "variables": {
@@ -89,13 +77,15 @@
       "applicationInsightsName": "[parameters('appName')]",
       "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
       "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-      "functionWorkerRuntime": "[parameters('runtime')]"
+      "functionWorkerRuntime": "[parameters('runtime')]",
+      "graphiqlStorageName":"[parameters('appName')]",
+      "databaseAccount":"[concat(parameters('appName'),'db')]"
     },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2018-07-01",
-            "name": "[parameters('storageAccountName')]",
+            "name": "[variables('graphiqlStorageName')]",
             "location": "[parameters('location')]",
             "dependsOn": [],
             "sku": {
@@ -110,7 +100,7 @@
         {
           "type": "Microsoft.DocumentDB/databaseAccounts",
           "apiVersion": "2015-04-08",
-          "name": "[parameters('databaseAccount')]",
+          "name": "[variables('databaseAccount')]",
           "location": "[parameters('location')]",
           "tags": {
               "defaultExperience": "[parameters('defaultExperience')]"
@@ -120,7 +110,7 @@
               "databaseAccountOfferType": "Standard",
               "locations": [
                   {
-                      "id": "[concat(parameters('databaseAccount'), '-', parameters('location'))]",
+                      "id": "[concat(variables('databaseAccount'), '-', parameters('location'))]",
                       "failoverPriority": 0,
                       "locationName": "[parameters('locationName')]"
                   }
@@ -162,7 +152,7 @@
         "dependsOn": [
           "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
           "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-          "[resourceId('Microsoft.DocumentDb/databaseAccounts', parameters('databaseAccount'))]"
+          "[resourceId('Microsoft.DocumentDb/databaseAccounts', variables('databaseAccount'))]"
         ],
         "properties": {
           "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -202,11 +192,11 @@
               },
               {
                 "name": "user",
-                "value": "[parameters('dbName')]"
+                "value": "[variables('databaseAccount')]"
               },
               {
                 "name": "password",
-                "value": "[parameters('dbPassword')]"
+                "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('databaseAccount')), '2015-11-06').primaryMasterKey]"
               },
               {
                 "name": "port",
