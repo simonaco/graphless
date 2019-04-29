@@ -88,3 +88,5 @@ local.settings.json
 # TypeScript output
 dist
 out
+
+graphiql/env.js
