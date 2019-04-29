@@ -8,8 +8,8 @@ az extension add --name storage-preview
 
 # deploy resource: az function, cosmosdb instance, storage account 
 az group deployment create \
-    --name $RESOURCE_GROUP \
-    --resource-group $RESOURCE_GROUP \
+    --name $APP_NAME \
+    --resource-group $APP_NAME \
     --template-file azuredeploy.json \
     --parameters azuredeploy.parameters.json
 
