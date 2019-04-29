@@ -79,7 +79,7 @@
       "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
       "functionWorkerRuntime": "[parameters('runtime')]",
       "graphiqlStorageName":"[parameters('appName')]",
-      "databaseAccount":"[concat(parameters('appName'),'db')]"
+      "databaseAccount":"[concat(parameters('appName'))]"
     },
     "resources": [
         {
