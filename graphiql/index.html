@@ -32,7 +32,7 @@
     <script src="//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js"></script>
     <script src="//cdn.jsdelivr.net/react/15.4.2/react.min.js"></script>
     <script src="//cdn.jsdelivr.net/react/15.4.2/react-dom.min.js"></script>
-    <script src="./../env.js"></script>
+    <script src="./env.js"></script>
 
     <!--
       These two files can be found in the npm module, however you may wish to
@@ -128,6 +128,7 @@
       function graphQLFetcher(graphQLParams) {
         // This example expects a GraphQL server at the path /graphql.
         // Change this to point wherever you host your GraphQL server.
+        console.log(env.WEBSITE_NAME);
         return fetch(`https://${env.WEBSITE_NAME}.azurewebsites.net/api/graphql`, {
           method: 'post',
           headers: {
