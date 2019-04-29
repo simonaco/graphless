@@ -1,21 +1,32 @@
-RESOURCE_GROUP=graphless11
-STORAGE_ACC=cspace11
-STATIC_WEBSITE_URL="https://$STORAGE_ACC.z6.web.core.windows.net"
+APP_NAME=graphless12
 
-az group create --location uksouth --name $RESOURCE_GROUP
+# create resource group
+az group create --location uksouth --name $APP_NAME
+
+# enable static storage
+az extension add --name storage-preview
+
+# deploy resource: az function, cosmosdb instance, storage account 
 az group deployment create \
     --name $RESOURCE_GROUP \
     --resource-group $RESOURCE_GROUP \
     --template-file azuredeploy.json \
     --parameters azuredeploy.parameters.json
 
+# generate dynamic url part for az functions enpoint
+./env.sh > ./graphiql/env.js "$APP_NAME"
 
-az webapp cors add -g $RESOURCE_GROUP -n $STORAGE_ACC --allowed-origins $STATIC_WEBSITE_URL
+# update static storage config for index and 404 files
+az storage blob service-properties update --account-name "$APP_NAME" --static-website --404-document index.html --index-document index.html
 
-az extension add --name storage-preview
+# upload graphiql page & env file
+az storage blob upload-batch -s graphiql -d \$web --account-name "$APP_NAME"
 
-env.sh > env.js
+# fetch static website url 
+STATIC_WEBSITE_URL=$(az storage account show -n "$APP_NAME" -g "$APP_NAME" --query "primaryEndpoints.web" --output tsv)
 
-az storage blob service-properties update --account-name $STORAGE_ACC --static-website --404-document index.html --index-document index.html
+# remove trailing slash from static storage endpoint url
+CORS_URL=$(echo $STATIC_WEBSITE_URL | sed 's/.$//')
 
-az storage blob upload-batch -s graphiql -d \$web --account-name $STORAGE_ACC
+# add static storage endpoint url to cors rules
+az webapp cors add -g $APP_NAME -n $APP_NAME --allowed-origins $CORS_URL
