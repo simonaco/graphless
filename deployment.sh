@@ -1,4 +1,6 @@
 APP_NAME=graphless12
+DB_NAME=cspace
+COLLECTION_NAME=speakers
 
 # create resource group
 az group create --location uksouth --name $APP_NAME
@@ -11,7 +13,7 @@ az group deployment create \
     --name $APP_NAME \
     --resource-group $APP_NAME \
     --template-file azuredeploy.json \
-    --parameters azuredeploy.parameters.json
+    --parameters appName=$APP_NAME
 
 # generate dynamic url part for az functions enpoint
 ./env.sh > ./graphiql/env.js "$APP_NAME"
@@ -30,3 +32,6 @@ CORS_URL=$(echo $STATIC_WEBSITE_URL | sed 's/.$//')
 
 # add static storage endpoint url to cors rules
 az webapp cors add -g $APP_NAME -n $APP_NAME --allowed-origins $CORS_URL
+
+az cosmosdb database create --resource-group $APP_NAME --name $APP_NAME --db-name $DB_NAME
+az cosmosdb collection create --resource-group $APP_NAME --name $APP_NAME --collection-name $COLLECTION_NAME --db-name $DB_NAME
