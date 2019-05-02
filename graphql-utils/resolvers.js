@@ -1,16 +1,13 @@
 const resolvers = {
-  speaker: async (obj, args, context, info) => {
-    const Speakers = args.client.collection('speakers')
-    return await Speakers.findOne({ username: obj.username })
+  hello: async (obj, args, context, info) => {
+    return `Hello ${obj.name}`
   },
-  speakers: async (obj, args, context, info) => {
-    const Speakers = args.client.collection('speakers')
-    return await Speakers.find({}).toArray()
-  },
-  updateSpeaker: async (obj, args, context, info) => {
-    const Speakers = args.client.collection('speakers')
-    return await Speakers.findOne({ username: obj.username })
-  },
+  insertCity: async (obj, args, context, info) => {
+    const collection = args.client.collection(process.env.collection)
+    return await collection.insertOne({
+      name: obj.name
+    })
+  }
 }
 
 module.exports.resolvers = resolvers

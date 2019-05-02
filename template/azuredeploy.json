@@ -40,7 +40,7 @@
       },
       "repoURL": {
         "type": "string",
-        "defaultValue": "https://github.com/simonaco/cspace-backend"
+        "defaultValue": "https://github.com/simonaco/graphless"
       },
       "branch": {
         "type": "string",

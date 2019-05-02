@@ -1,6 +1,7 @@
-APP_NAME=graphless12
-DB_NAME=cspace
-COLLECTION_NAME=speakers
+APP_NAME=graphless16
+DB_NAME=graphless16
+COLLECTION_NAME=names
+REPO_URL=https://github.com/simonaco/graphless
 
 # create resource group
 az group create --location uksouth --name $APP_NAME
@@ -12,8 +13,8 @@ az extension add --name storage-preview
 az group deployment create \
     --name $APP_NAME \
     --resource-group $APP_NAME \
-    --template-file azuredeploy.json \
-    --parameters appName=$APP_NAME
+    --template-file template/azuredeploy.json \
+    --parameters appName=$APP_NAME repoURL=$REPO_URL
 
 # generate dynamic url part for az functions enpoint
 ./env.sh > ./graphiql/env.js "$APP_NAME"
