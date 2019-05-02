@@ -9,3 +9,9 @@
 1. [Azure Functions CLI](https://docs.microsoft.com/azure/azure-functions/functions-run-local?WT.mc_id=graphqless-github-sicotin)
 
 1. [Free Azure Account](https://azure.microsoft.com/en-us/free/?wt.mc_id=graphless-github-sicotin)
+
+
+## Setup Azure Pipelines
+
+1. Create Service Connection 
+1. Set variables: Parameters.ConnectedServiceName 

@@ -3,7 +3,7 @@ const resolvers = {
     return `Hello ${obj.name}`
   },
   insertCity: async (obj, args, context, info) => {
-    const collection = args.client.collection(process.env.collection)
+    const collection = args.client.collection("names")
     return await collection.insertOne({
       name: obj.name
     })
