@@ -17,7 +17,7 @@ az group deployment create \
     --parameters appName=$APP_NAME repoURL=$REPO_URL
 
 # generate dynamic url part for az functions enpoint
-./env.sh > ./graphiql/env.js "$APP_NAME"
+./env.sh > ./../graphiql/env.js "$APP_NAME"
 
 # update static storage config for index and 404 files
 az storage blob service-properties update --account-name "$APP_NAME" --static-website --404-document index.html --index-document index.html
