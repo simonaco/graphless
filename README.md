@@ -1,6 +1,6 @@
 # Graphless
 
-[![Build Status](https://dev.azure.com/sicotin/sicotin/_apis/build/status/simonaco.graphless?branchName=master)](https://dev.azure.com/sicotin/sicotin/_build/latest?definitionId=27&branchName=master)
+[![Build Status](https://dev.azure.com/sicotin/sicotin/_apis/build/status/simonaco.graphless?branchName=master)](https://dev.azure.com/sicotin/sicotin/_build/latest?definitionId=27&branchName=master&WT.mc_id=graphless-github-sicotin)
 
 ## Prerequisites
 
